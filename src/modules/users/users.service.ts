@@ -61,7 +61,7 @@ const deleteUserFromDB = async (id :string) =>{
  const result = await pool.query(
       `
       DELETE FROM users 
-      WHERE ID=$1
+      WHERE id=$1
       `,
       [id],
     );
