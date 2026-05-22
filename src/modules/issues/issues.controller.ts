@@ -25,7 +25,7 @@ const createIssues = async (req: Request, res: Response) => {
 
 const getAllIssues = async (req: Request, res: Response) => {
   try {
-    const result = await issuesService.getAllIssuesFromDB();
+    const result = await issuesService.getAllIssuesFromDB(req.query);
     res.status(200).json({
       success: true,
       message: "Issue retrieved successfully",
