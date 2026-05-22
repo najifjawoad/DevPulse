@@ -42,7 +42,7 @@ await pool.query(`
     status VARCHAR(20) NOT NULL DEFAULT 'open'
         CHECK (status IN ('open', 'in_progress', 'resolved')),
 
-    reporter_id INTEGER NOT NULL,
+    reporter_id INTEGER REFERENCES   users(id) ON DELETE CASCADE NOT NULL,
 
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 

@@ -1,8 +1,18 @@
 import { pool } from "../../DB/db";
+import type { IIssue } from "./issues.interface";
 
 // create issues :
-const createIssuesIntoDB = async (payload: any) => {
+const createIssuesIntoDB = async (payload: IIssue) => {
   const { title, description, type, reporter_id } = payload;
+
+  const user = await pool.query(`
+    SELECT * FROM users
+    WHERE id=$1
+    `,[reporter_id]);
+    if(user.rows.length === 0)
+    {
+      throw new Error ("User doesn't exist");
+    }
 
   const result = await pool.query(
     `
@@ -39,7 +49,7 @@ const getSingleIssueFromDB = async (id: string) => {
 };
 
 // update issue :
-const updateIssueFromDB = async (payload: any, id: string) => {
+const updateIssueFromDB = async (payload: IIssue, id: string) => {
   const { title, description, type } = payload;
   const result = await pool.query(
     `
